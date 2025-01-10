@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ command }) => ({
-  base: command === 'serve' ? '/' : '/Kino_Group_Project/',
+export default defineConfig({
+  base: '/', // Ändra till bara '/' för lokal utveckling
   build: {
     rollupOptions: {
       input: {
@@ -14,4 +14,4 @@ export default defineConfig(({ command }) => ({
   css: {
     devSourcemap: true,
   },
-}));
+});
