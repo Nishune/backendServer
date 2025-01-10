@@ -1,20 +1,31 @@
-//importerar express för att skapa webbserver
 import express from 'express';
+import fs from 'fs/promises';
 
-//skapar en ny express applikation/server i app.
 const app = express();
 
-//Express servar statiska filer från dist mappen
-//Om något letar efter styles.css så letar express i dist/styles.css
-app.use(express.static('dist'));
+//Serva statiska filerna
+app.use(express.static('./dist'));
 
-//hanterar alla andra vägar som inte matchade med en faktiskt fil
-//Skickar index.html som svar så att frontend-kod kan hantera routing
-app.get('*', (req, res) => {
-  res.sendFile('dist/index.html', { root: '.' });
+//Serva index.html
+app.get('/', async (request, response) => {
+  const buf = await fs.readFile('./dist/index.html');
+  const html = buf.toString();
+  response.send(html);
 });
 
-//Startar servern på port 3080 och cl ett meddelande då det är igång.
+//hantera /about och serva about.html
+app.get('/about', async (request, response) => {
+  const buf = await fs.readFile('./dist/about.html');
+  const html = buf.toString();
+  response.send(html);
+});
+
+app.get('/kids', async (request, response) => {
+  const buf = await fs.readFile('./dist/kids.html');
+  const html = buf.toString();
+  response.send(html);
+});
+
 app.listen(3080, () => {
   console.log('Server running on port 3080');
 });
